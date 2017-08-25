@@ -25,6 +25,30 @@ class BooksApp extends React.Component {
         this.setState({allBooks: books})
     })
   }
+
+  moveBookToShelf = (book, shelf)=> {
+    const { allBooks } = this.state
+    BooksAPI.update(book, shelf).then((shelves) => {
+      // this.setState({allBooks: allBooks.push(book)});
+      var bookIndex = allBooks.findIndex((el, index)=>{
+        return el.id == book.id
+      });
+
+      if(bookIndex == -1){
+
+      }else{
+        allBooks[bookIndex] = book;
+      }
+
+      this.setState({allBooks});
+    })
+  }
+
+  onSearch = (query, maxResults)=> {
+    BooksAPI.search(query, 20).then((books)=> {
+      this.setState({allBooks: books});
+    })
+  }
   
 
   render() {
@@ -32,12 +56,14 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path="/" 
           render={(history)=> (
-            <Dashboard  allBooks={this.state.allBooks} />
+            <Dashboard  allBooks={this.state.allBooks} moveBookToShelf={this.moveBookToShelf}/>
           )}
         />
         <Route exact path="/search" 
           render={(history)=> (
-            <SearchPage   allBooks={this.state.allBooks} />
+            <SearchPage   allBooks={this.state.allBooks} 
+                          moveBookToShelf={this.moveBookToShelf}
+                          onSearch={this.onSearch} />
           )}
         />
 

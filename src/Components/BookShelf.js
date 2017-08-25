@@ -18,7 +18,7 @@ class BookShelf extends Component {
                     <ol className="books-grid">
                         {filteredBooks.map((book)=>(
                             <div key={book.id}>
-                                <Book book={book}/>
+                                <Book book={book} moveBookToShelf={this.props.moveBookToShelf}/>
                             </div> 
                         ))}
                     </ol>

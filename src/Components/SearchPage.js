@@ -13,15 +13,10 @@ class SearchPage extends Component {
         query: ''
     }
 
-    // componentDidMount() {
-    //     BooksAPI.getAll().then((books)=> {
-    //         console.log(books);
-    //         this.setState({books: books})
-    //     })
-    // }
-
     updateQuery = (query) => {
-        this.setState({ query: query.trim() })
+        this.setState({ query: query.trim() });
+        this.props.onSearch(query, 20);
+        
     }
 
     render(){
@@ -50,7 +45,7 @@ class SearchPage extends Component {
                         {this.props.allBooks.map((book)=>{
                             return(
                                 <div key={book.id}>
-                                    <Book book={book}/>
+                                    <Book book={book} moveBookToShelf={this.props.moveBookToShelf} />
                                 </div> 
                             )
                         })}

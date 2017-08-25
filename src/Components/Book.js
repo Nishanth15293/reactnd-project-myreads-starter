@@ -6,15 +6,15 @@ class Book extends Component {
         super();
     }
 
-    state = {
-        shelf : 'none'
-    }
+    // state = {
+    //     shelf : ''
+    // }
 
-    handleChange = (e) => {
-        BooksAPI.update(this.props.Book, e.target.value).then((book) => {
-            console.log(book.shelf);
-            this.setState({shelf: book.shelf});
-        })
+    handleShelfChange(value) {
+        const {book} = this.props
+        this.props.moveBookToShelf(this.props.book, value);
+        book.shelf = value;
+        this.setState({book})
     }
 
     render(){
@@ -25,7 +25,7 @@ class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks && book.imageLinks.thumbnail})` }}></div>
                     <div className="book-shelf-changer">
-                    <select value={this.state.shelf} onChange={this.handleChange}>
+                    <select value={book.shelf || 'none'} onChange={(e)=> this.handleShelfChange(e.target.value)}>
                         <option value="none" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
@@ -37,9 +37,9 @@ class Book extends Component {
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{
                     (book.authors) && book.authors.map((author) => (
-                    <p key={author}>
+                    <span key={author}>
                         {author}
-                    </p>
+                    </span>
                 ))}</div>
                 </div>
             </li>
