@@ -8,8 +8,7 @@ class SearchPage extends Component {
     }
 
     state = {
-        allBooks : [],
-        searchedBooks: [],
+        searchedBooks : [],
         query: ''
     }
 
@@ -42,7 +41,7 @@ class SearchPage extends Component {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {this.props.allBooks.map((book)=>{
+                        {this.props.searchedBooks.length > 0 && this.props.searchedBooks.map((book)=>{
                             return(
                                 <div key={book.id}>
                                     <Book book={book} moveBookToShelf={this.props.moveBookToShelf} />
