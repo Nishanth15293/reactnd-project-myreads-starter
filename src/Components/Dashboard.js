@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import BookShelf from './BookShelf'
-import Book from './Book'
 
 class Dashboard extends Component {
-    constructor(){
-        super();
-    }
 
     render(){
         const { allBooks } = this.props
@@ -23,7 +19,7 @@ class Dashboard extends Component {
                 </div>
                 </div>
                 <div className="open-search">
-                <Link to="/search" />
+                    <Link to="/search" />
                 </div>
             </div>
         )

@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import * as BooksAPI from '../BooksAPI'
 
 class Book extends Component {
-    constructor(){
-        super();
-    }
-
-    // state = {
-    //     shelf : ''
-    // }
 
     handleShelfChange(value) {
         const {book} = this.props
