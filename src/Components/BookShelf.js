@@ -8,9 +8,10 @@ class BookShelf extends Component {
 
     render(){
         const {books, title} = this.props
-        const filteredBooks = books.filter((book)=>{
-            return book.shelf === this.props.shelf
-        })
+        // const filteredBooks = books.filter((book)=>{
+        //     return book.shelf === this.props.shelf
+        // })
+        const filteredBooks = books.filter(book => book.shelf === this.props.shelf);
         return(
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{title}</h2>

@@ -20,22 +20,10 @@ class BooksApp extends React.Component {
   }
 
   moveBookToShelf = (book, shelf)=> {
-    const { allBooks } = this.state
-    var bookIndex = allBooks.findIndex((el, index)=>{
-      return el.id === book.id
-    });
-
-    if(bookIndex === -1){
-      const newBook = Object.assign({}, book);
-      newBook.shelf = shelf;
-      allBooks.push(newBook);
-    }else{
-      allBooks[bookIndex] = book;
-      allBooks[bookIndex].shelf = shelf;
-    }
+    const newBook = {...book, shelf };
+    const allBooks = this.state.allBooks.filter(v => v.id !== book.id).concat([newBook])
 
     BooksAPI.update(book, shelf).then((shelves) => {
-      // this.setState({allBooks: allBooks.push(book)});
       this.setState({allBooks});
     })
   }

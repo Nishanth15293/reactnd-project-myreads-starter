@@ -11,23 +11,28 @@ class SearchPage extends Component {
 
     updateQuery = (query) => {
         this.setState({ query: query.trim() });
-        this.onSearch(query, 20);
+        if(query.length === 0){
+            this.setState({searchedBooks: []});
+        }else{
+            this.onSearch(query, 20);
+        }
     }
 
     onSearch = (query, maxResults)=> {
         const { myBooks } = this.props;
         BooksAPI.search(query, 20).then((books)=> {
             if(books && books.length > 1){
-                books.map((book)=> {
-                    var j=0;
-                    for(j; j<myBooks.length; j++){
-                        if(book.id === myBooks[j].id){
-                            book.shelf = myBooks[j].shelf;
-                            break;
-                        }
-                    }
+                // you first iterate over all books, and store the result at searchedBooks
+                const searchedBooks = books.map((book)=> {
+                    // lets check if the book already exists
+                    const existingBook = myBooks.find(v => v.id === book.id);
+                    // if the book exists, lets use the current shelf. otherwise lets set the shelf to "none"
+                    book.shelf = !!existingBook ? existingBook.shelf : 'none';
+                    // return the mutated (or not) book to "map()"
+                    return book;
                 })
-                this.setState({searchedBooks: books});
+                // another powerful feature from ES6, shortcut variables
+                this.setState({ searchedBooks });
             }
         
         })
